@@ -7,8 +7,8 @@ products.forEach((products)=>{
               src=${products.image}>
             </div>
 
-            <div class=${products.name}>
-            Black and Gray Athletic Cotton Socks - 6 Pairs
+            <div class="product-name limit-text-to-2-lines">
+            ${products.name}
             </div>
 
             <div class="product-rating-container">
@@ -45,10 +45,36 @@ products.forEach((products)=>{
             Added
             </div>
 
-            <button class="add-to-cart-button button-primary">
+            <button class="add-to-cart-button button-primary js-add-to-cart"
+            data-product-id = "${products.id}"    
+            >
             Add to Cart
             </button>
         </div>`
 });
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
+
+document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+    button.addEventListener('click',() => {
+        const productId = button.dataset.productId;
+
+        let matchingItem;
+        cart.forEach((item)=>{
+            if(productId === item.productId) {
+                matchingItem = item;
+            };
+        });
+
+        if (matchingItem) {
+            matchingItem.quantity += 1;
+        } else{
+            cart.push({
+                productId : productId,
+                quantity : 1
+            });
+        };
+
+        console.log(cart);
+    });
+});
