@@ -108,11 +108,3 @@ document.querySelectorAll('.js-delete-link').forEach((link)=>{
     });
 
 });
-
-
-
-
-
-
-
-

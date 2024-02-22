@@ -4,31 +4,31 @@ import { formatCurrency } from './utils/money.js';
 
 let productsHTML = ' ';
 
-products.forEach((products)=>{
+products.forEach((product)=>{
         productsHTML += `<div class="product-container">
             <div class="product-image-container">
             <img class="product-image"
-              src=${products.image}>
+              src=${product.image}>
             </div>
 
             <div class="product-name limit-text-to-2-lines">
-            ${products.name}
+            ${product.name}
             </div>
 
             <div class="product-rating-container">
             <img class="product-rating-stars"
-                src="images/ratings/rating-${(products.rating.stars) * 10}.png">
+                src="images/ratings/rating-${(product.rating.stars) * 10}.png">
             <div class="product-rating-count link-primary">
-                ${products.rating.count}
+                ${product.rating.count}
             </div>
             </div>
 
             <div class="product-price">
-            $${formatCurrency(products.priceCents)}
+            $${formatCurrency(product.priceCents)}
             </div>
 
-            <div class="product-quantity-container">
-            <select>
+            <div class="product-quantity-container ">
+            <select class="js-product-quantity-selecter-${product.id}">
                 <option selected value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -44,13 +44,13 @@ products.forEach((products)=>{
 
             <div class="product-spacer"></div>
 
-            <div class="added-to-cart">
+            <div class="added-to-cart js-added-to-cart-${product.id}">
             <img src="images/icons/checkmark.png">
             Added
             </div>
 
             <button class="add-to-cart-button button-primary js-add-to-cart"
-            data-product-id = "${products.id}"    
+            data-product-id = "${product.id}"    
             >
             Add to Cart
             </button>
@@ -65,15 +65,32 @@ function updateCartQuantity(){
     cart.forEach((cartItem)=>{
         cartQuantity += cartItem.quantity;
     });
-
+    
     document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-
-}
+};
 
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
+    let addedMessageTimeoutId;
     button.addEventListener('click',() => {
-        const productId = button.dataset.productId;
-        addToCart(productId);
+        const { productId } = button.dataset;
+        // const productId = button.dataset.productId;
+
+        const selectQuantity = document.querySelector(`.js-product-quantity-selecter-${productId}`);
+        const addedMessage = document.querySelector(`.js-added-to-cart-${productId}`);
+
+        addToCart(productId, selectQuantity);
         updateCartQuantity();
+
+        addedMessage.classList.add("added-to-cart-visible")
+        
+        if (addedMessageTimeoutId){
+            clearTimeout(addedMessageTimeoutId);
+        }
+
+        const timeoutId = setTimeout(()=>{
+        addedMessage.classList.remove("added-to-cart-visible");
+        },2000);
+
+        addedMessageTimeoutId = timeoutId;
     });
 });
