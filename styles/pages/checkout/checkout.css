@@ -212,9 +212,11 @@
 
 .quantity-input{
   width:30px;
+}
+.is-quantity-update-invisible{
   display: none;
 }
 
-.quantity-input-visible{
+.is-quantity-update-visible{
   display: initial;
 }
