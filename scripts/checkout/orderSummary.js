@@ -36,7 +36,7 @@ let orderSummaryHTML = '';
                     ${matchingProduct.name}
                     </div>
                     <div class="product-price">
-                    $${formatCurrency(matchingProduct.priceCents)}
+                    ₹${formatCurrency(matchingProduct.priceCents)}
                     </div>
                     <div class="product-quantity">
                     <span>
@@ -77,7 +77,7 @@ let orderSummaryHTML = '';
             const dateString = deliveryDate.format('dddd MMM D');
             const priceString = deliveryOption.priceCents === 0 
             ? 'FREE' 
-            : `$${formatCurrency(deliveryOption.priceCents)} -`;
+            : `₹${formatCurrency(deliveryOption.priceCents)} -`;
 
             const isChecked = cartItem.deliveryOptionId === deliveryOption.id;
 
