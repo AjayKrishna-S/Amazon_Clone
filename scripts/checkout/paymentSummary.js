@@ -1,7 +1,7 @@
 import { calculateCartQuantity, cart } from "../../data/cart.js";
 import { products, getProduct } from "../../data/products.js";
 import { deliveryOptions, getDeliveryOption } from "../../data/deliveryOptions.js";
-import { formatCurrency } from "../utils/money.js";
+import formatCurrency from "../utils/money.js";
 
 
 export function renderPaymentSummary(){
@@ -18,7 +18,6 @@ export function renderPaymentSummary(){
     const priceBeforeTaxCents = productPriceCents + shippingPriceCents;
     const taxCents = priceBeforeTaxCents * (10/100);
     const totalCents = priceBeforeTaxCents + taxCents;
-    console.log(totalCents)
 
     const paymentSummaryHTML = `<div class="payment-summary-title">
             Order Summary
