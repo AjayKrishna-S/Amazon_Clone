@@ -1,5 +1,5 @@
-function formatCurrency(priceCents) {
-    return (Math.round(priceCents) / 100).toFixed(2);
+function formatCurrency(priceRupees) {
+    return (Math.round(priceRupees));
 };
 
 export default formatCurrency;

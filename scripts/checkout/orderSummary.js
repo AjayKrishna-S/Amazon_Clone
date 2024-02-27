@@ -36,7 +36,7 @@ let orderSummaryHTML = '';
                     ${matchingProduct.name}
                     </div>
                     <div class="product-price">
-                    ₹${formatCurrency(matchingProduct.priceCents)}
+                    ₹${formatCurrency(matchingProduct.priceRupees)}
                     </div>
                     <div class="product-quantity">
                     <span>
@@ -75,9 +75,9 @@ let orderSummaryHTML = '';
             const today = dayjs();
             const deliveryDate = today.add(deliveryOption.deliveryTime,'days');
             const dateString = deliveryDate.format('dddd MMM D');
-            const priceString = deliveryOption.priceCents === 0 
+            const priceString = deliveryOption.priceRupees === 0 
             ? 'FREE' 
-            : `₹${formatCurrency(deliveryOption.priceCents)} -`;
+            : `₹${formatCurrency(deliveryOption.priceRupees)} -`;
 
             const isChecked = cartItem.deliveryOptionId === deliveryOption.id;
 

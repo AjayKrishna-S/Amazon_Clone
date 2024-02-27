@@ -5,18 +5,18 @@ import formatCurrency from "../utils/money.js";
 
 
 export function renderPaymentSummary(){
-    let productPriceCents = 0;
-    let shippingPriceCents = 0;
+    let productPriceRupees = 0;
+    let shippingPriceRupees = 0;
     cart.forEach((cartItem)=>{
         const productId = cartItem.productId;
         const product = getProduct(productId);
-        productPriceCents += product.priceCents * cartItem.quantity;
+        productPriceRupees += product.priceRupees * cartItem.quantity;
         const deliveryOption = getDeliveryOption(cartItem.deliveryOptionId);
-        shippingPriceCents += deliveryOption.priceCents;
+        shippingPriceRupees += deliveryOption.priceRupees;
     });
 
-    const priceBeforeTaxCents = productPriceCents + shippingPriceCents;
-    const taxCents = priceBeforeTaxCents * (10/100);
+    const priceBeforeTaxCents = productPriceRupees + shippingPriceRupees;
+    const taxCents = priceBeforeTaxCents * (18/100);
     const totalCents = priceBeforeTaxCents + taxCents;
 
     const paymentSummaryHTML = `<div class="payment-summary-title">
@@ -25,12 +25,12 @@ export function renderPaymentSummary(){
 
           <div class="payment-summary-row">
             <div>Items (${calculateCartQuantity()}):</div>
-            <div class="payment-summary-money">₹${formatCurrency(productPriceCents)}</div>
+            <div class="payment-summary-money">₹${formatCurrency(productPriceRupees)}</div>
           </div>
 
           <div class="payment-summary-row">
             <div>Shipping &amp; handling:</div>
-            <div class="payment-summary-money">₹${formatCurrency(shippingPriceCents)}</div>
+            <div class="payment-summary-money">₹${formatCurrency(shippingPriceRupees)}</div>
           </div>
 
           <div class="payment-summary-row subtotal-row">
@@ -39,7 +39,7 @@ export function renderPaymentSummary(){
           </div>
 
           <div class="payment-summary-row">
-            <div>Estimated tax (10%):</div>
+            <div>Estimated tax (18%):</div>
             <div class="payment-summary-money">₹${formatCurrency(taxCents)}</div>
           </div>
 
