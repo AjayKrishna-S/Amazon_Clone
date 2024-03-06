@@ -18,13 +18,14 @@ export function renderPaymentSummary(){
     const priceBeforeTaxCents = productPriceRupees + shippingPriceRupees;
     const taxCents = priceBeforeTaxCents * (18/100);
     const totalCents = priceBeforeTaxCents + taxCents;
+    let cartQuantity = calculateCartQuantity();
 
     const paymentSummaryHTML = `<div class="payment-summary-title">
             Order Summary
           </div>
 
           <div class="payment-summary-row">
-            <div>Items (${calculateCartQuantity()}):</div>
+            <div>Items (${cartQuantity}):</div>
             <div class="payment-summary-money">₹${formatCurrency(productPriceRupees)}</div>
           </div>
 

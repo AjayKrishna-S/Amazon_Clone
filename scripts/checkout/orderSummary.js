@@ -1,8 +1,7 @@
-import {cart, removeFromCart, calculateCartQuantity, updateQuantity, updateDeliveryOption} from '../../data/cart.js';
+import {cart, removeFromCart, updateQuantity, updateDeliveryOption} from '../../data/cart.js';
 import { products, getProduct } from '../../data/products.js';
 import formatCurrency from '../utils/money.js';
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
-import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
+import { deliveryOptions, getDeliveryOption, calculateDeliveryDate } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 import { renderCheckoutHeader } from './checkoutHeader.js';
 
@@ -16,11 +15,10 @@ let orderSummaryHTML = '';
         const matchingProduct = getProduct(productId);
         const deliveryOption = getDeliveryOption(deliveryOptionId);
 
-   
-
-        const today = dayjs();
-        const deliveryDate = today.add(deliveryOption.deliveryTime,'days');
-        const dateString = deliveryDate.format('dddd MMM D');
+        const dateString = calculateDeliveryDate(deliveryOption);
+        // const today = dayjs();
+        // const deliveryDate = today.add(deliveryOption.deliveryTime,'days');
+        // const dateString = deliveryDate.format('dddd MMM D');
 
         orderSummaryHTML += 
             `<div class="cart-item-container js-cart-items-container-${matchingProduct.id}">
@@ -73,9 +71,8 @@ let orderSummaryHTML = '';
     function deliveryOptionsHTML(matchingProduct,cartItem){
         let html = '';
         deliveryOptions.forEach((deliveryOption) => {
-            const today = dayjs();
-            const deliveryDate = today.add(deliveryOption.deliveryTime,'days');
-            const dateString = deliveryDate.format('dddd MMM D');
+
+            const dateString = calculateDeliveryDate(deliveryOption);
             const priceString = deliveryOption.priceRupees === 0 
             ? 'FREE' 
             : `₹${formatCurrency(deliveryOption.priceRupees)} -`;
@@ -107,8 +104,10 @@ let orderSummaryHTML = '';
         link.addEventListener('click',()=>{
             const productId = link.dataset.productId;
             removeFromCart(productId);
+
+            const container = document.querySelector(`.js-cart-items-container-${productId}`);
+            container.remove();
             renderCheckoutHeader();
-            renderOrderSummary();
             renderPaymentSummary()
         });
 
