@@ -28,8 +28,26 @@ export function getDeliveryOption(deliveryOptionId){
     return deliveryOption;
 };
 
+function isWeekend(date){
+    const dayOfWeek = date.format('dddd');
+    return dayOfWeek === 'Sunday' || dayOfWeek === 'Saturday'
+}
+
 export function calculateDeliveryDate(deliveryOption){
-    const today = dayjs();
-    const deliveryDate = today.add(deliveryOption.deliveryTime,'days');
+    // const today = dayjs();
+    // const deliveryDate = today.add(deliveryOption.deliveryTime,'days');
+
+
+    let remainingDays = deliveryOption.deliveryTime;
+    let deliveryDate = dayjs();
+
+    while(remainingDays > 0){
+        deliveryDate = deliveryDate.add(1,'day');
+
+        if (!isWeekend(deliveryDate)){
+            remainingDays-- ;
+        }
+    }
+
     return deliveryDate.format('dddd MMM D');
 };
