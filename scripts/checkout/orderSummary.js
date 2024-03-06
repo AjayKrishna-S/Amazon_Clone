@@ -4,6 +4,7 @@ import formatCurrency from '../utils/money.js';
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
 import { renderPaymentSummary } from './paymentSummary.js';
+import { renderCheckoutHeader } from './checkoutHeader.js';
 
 export function renderOrderSummary(){
 let orderSummaryHTML = '';
@@ -106,20 +107,12 @@ let orderSummaryHTML = '';
         link.addEventListener('click',()=>{
             const productId = link.dataset.productId;
             removeFromCart(productId);
-
-            const container = document.querySelector(`.js-cart-items-container-${productId}`);
-            container.remove();
-            updateCartQuantity();
+            renderCheckoutHeader();
+            renderOrderSummary();
             renderPaymentSummary()
         });
 
     });
-
-    function updateCartQuantity(){
-        document.querySelector('.js-return-to-home-link').innerHTML = `${calculateCartQuantity()} Items`;
-    };
-
-
 
     document.querySelectorAll('.js-update-quantity-link').forEach((updateItem)=>{
         updateItem.addEventListener('click',()=>{
@@ -165,7 +158,7 @@ let orderSummaryHTML = '';
 
         const quantityCount = document.querySelector(`.js-update-quantity-count-${productId}`)
         quantityCount.innerHTML =  updatedQuantity;
-        updateCartQuantity();
+        renderCheckoutHeader();
 
         document.querySelector(`.js-quantity-update-form-${productId}`).classList.remove('is-quantity-update-visible');
         document.querySelector(`.js-update-quantity-${productId}`).classList.remove('is-quantity-update-invisible');
@@ -182,7 +175,7 @@ let orderSummaryHTML = '';
         })
     })
 
-    updateCartQuantity();
+    renderCheckoutHeader();
 };
 
 
