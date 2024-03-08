@@ -1,6 +1,6 @@
 import formatCurrency from '../scripts/utils/money.js'
 
-console.log('test suit : formatCurrency');
+console.log('test suit : formaurrency');
 console.log('round up');
 
 if (formatCurrency(2000.10) === 2000){
