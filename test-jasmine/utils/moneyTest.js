@@ -1,4 +1,4 @@
-import formatCurrency from '../scripts/utils/money.js'
+import formatCurrency from '../../scripts/utils/money.js'
 
 describe('test suit: formatCurrency', ()=>{
     it('rounds up to nearest value',()=>{
